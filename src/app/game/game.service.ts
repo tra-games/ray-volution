@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { Moment } from 'moment';
+import { calculateResource } from '@ray-volution/core/resources';
 import * as moment from 'moment';
 
-import { userBuildings, buildings, costs, resources, userResources } from '../data';
+import { buildings, costs, resources, userBuildings, userResources } from '../data';
 import { IBuildingF, IResourceF } from './game.component';
 import { getCost, getRegen } from '../hepler';
 
@@ -34,6 +34,8 @@ export class GameService {
   }
 
   public getResourcesDetails(): IResourceF[] {
+    const now = moment();
+
     return resources
     .filter(r => userResources.map(u => u.resourceId).includes(r.id))
     .map((r) => {
@@ -42,22 +44,23 @@ export class GameService {
       return {
         id: r.id,
         name: r.name,
-        nbrOf: userR.nbrOf,
+        nbrOf: calculateResource(userR.nbrOfAtDate, userR.regen, userR.date, now),
         regen: userR.regen,
       };
     });
   }
 
   public upgradeBuilding(buildingF: IBuildingF): void {
-    const now = moment().unix();
+    const now = moment();
 
     const building = userBuildings.find(u => u.buildingId === buildingF.id);
     building.level += 1;
 
     for (const cost of buildingF.costs) {
       const resource = userResources.find(u => u.resourceId === cost.resource.id);
-      resource.nbrOf += (now - resource.updatedAt) * resource.regen - cost.value;
-      resource.updatedAt = now;
+      resource.nbrOfAtDate = calculateResource(resource.nbrOfAtDate, resource.regen, resource.date, now);
+      resource.nbrOfAtDate -= cost.value;
+      resource.date = now;
 
       const baseRegen = costs.find(c => c.buildingId === buildingF.id && c.resourceId === cost.resource.id).baseRegen;
 

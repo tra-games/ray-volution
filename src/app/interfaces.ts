@@ -1,3 +1,5 @@
+import { Moment } from 'moment';
+
 export interface IUser {
   id: 1;
   resources: IUserResource[];
@@ -7,9 +9,9 @@ export interface IUser {
 export interface IUserResource {
   userId: number;
   resourceId: number;
-  nbrOf: number;
+  nbrOfAtDate: number;
+  date: Moment;
   regen: number;
-  updatedAt: number;
 }
 
 export interface IUserBuilding {
