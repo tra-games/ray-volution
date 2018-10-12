@@ -17,8 +17,11 @@
       </div>
     </div>
   
-    <div class="upgrade">
-      <span *ngFor="let cost of building.costs" class="cost" (click)="upgradeBuilding(building.id)">
+    <div class="upgrade"
+         (click)="upgradeBuilding(building)">
+      <span *ngFor="let cost of building.costs"
+            class="cost"
+            [class.red]="!cost.hasEnough">
         {{ cost.resource.name }}: {{ cost.value }}
       </span>
     </div>

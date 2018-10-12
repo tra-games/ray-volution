@@ -3,14 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 
-import { IResource } from '../interfaces';
+import { IResource, ICost } from '../interfaces';
 import { GameService } from './game.service';
+import { hasEnough } from '../hepler';
 
 export interface IBuildingF {
   id: number;
   name: string;
   level: number;
-  costs: { resource: IResource, value: number; }[];
+  costs: { resource: IResource, value: number, hasEnough: boolean }[];
 }
 
 export interface IResourceF {
@@ -35,8 +36,7 @@ export class GameComponent implements OnInit {
   constructor(
     private _gameService: GameService,
   ) {
-    this.buildings = this._gameService.getBuildingsDetails();
-    this.resources = this._gameService.getResourcesDetails();
+    this._updateData();
   }
 
   public ngOnInit(): void {
@@ -48,11 +48,31 @@ export class GameComponent implements OnInit {
           ...r,
           nbrOf: r.nbrOf + (r.regen * TICKER / 1000),
         };
-      })
+      });
+
+      this.buildings = this.buildings.map((b) => {
+        return {
+          ...b,
+          costs: b.costs.map((c) => {
+            return {
+              ...c,
+              hasEnough: this.resources.find(r => r.id === c.resource.id).nbrOf > c.value,
+            };
+          }),
+        };
+      });
     }, TICKER);
   }
 
-  public upgradeBuilding(buildingId: number): void {
-    
+  public upgradeBuilding(building: IBuildingF): void {
+    if (hasEnough(building, this.resources)) {
+      this._gameService.upgradeBuilding(building);
+      this._updateData();
+    }
+  }
+
+  private _updateData(): void {
+    this.buildings = this._gameService.getBuildingsDetails();
+    this.resources = this._gameService.getResourcesDetails();
   }
 }

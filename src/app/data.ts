@@ -72,13 +72,13 @@ export const costs: ICost[] = [
     buildingId: 1, // Mine
     resourceId: 2, // Gaz
     baseCost: 10,
-    baseRegen: 0,
+    baseRegen: null,
   },
   {
     buildingId: 2, // Exctracteur
     resourceId: 1, // Minerai
     baseCost: 125,
-    baseRegen: 0,
+    baseRegen: null,
   },
   {
     buildingId: 2, // Exctracteur

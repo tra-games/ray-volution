@@ -16,7 +16,7 @@ $radius-normal: 6px;
 }
 
 .buildings {
-  width: 10%;
+  width: 15%;
   margin-bottom: 1em;
   
   .building {
@@ -31,11 +31,20 @@ $radius-normal: 6px;
       margin-bottom: 0.5em;
     }
 
-    .upgrade { 
+    .upgrade {
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
       background-color: lightyellow;
       border-radius: $radius-normal;
       padding: $padding-normal / 2;
+      color: green;
+
+      .cost {
+        &.red {
+          color: red;
+        }
+      }
     }
   }
 }
