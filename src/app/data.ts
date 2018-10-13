@@ -1,28 +1,28 @@
-import { IResource, IBuilding, ICost, IUserResource, IUserBuilding } from './interfaces';
+import { IBuilding, ICost, IResource, IUserBuilding, IUserResource } from './interfaces';
 
 import * as moment from 'moment';
 
-const now = moment().unix();
+const now = moment();
 
 export const user = {
   id: 1,
   name: 'Passinho',
-}
+};
 
 export const userResources: IUserResource[] = [
   {
     userId: 1,
     resourceId: 1,
-    nbrOf: 1000,
+    nbrOfAtDate: 1000,
     regen: 2,
-    updatedAt: now,
+    date: now,
   },
   {
     userId: 1,
     resourceId: 2,
-    nbrOf: 250,
+    nbrOfAtDate: 250,
     regen: 1,
-    updatedAt: now,
+    date: now,
   },
 ];
 
@@ -47,7 +47,7 @@ export const resources: IResource[] = [
   {
     id: 2,
     name: 'Gaz',
-  }
+  },
 ];
 
 export const buildings: IBuilding[] = [
@@ -58,7 +58,7 @@ export const buildings: IBuilding[] = [
   {
     id: 2,
     name: 'Exctracteur',
-  }
+  },
 ];
 
 export const costs: ICost[] = [
