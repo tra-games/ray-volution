@@ -1,0 +1,29 @@
+<div class="clock">{{ now | date:'medium' }}</div>
+
+<div class="resources">
+  <div *ngFor="let resource of resources" class="resource">
+    {{ resource.name }} : {{ resource.nbrOf }} (+{{ resource.regen }}/s)
+  </div>
+</div>
+<div class="buildings">
+  <div *ngFor="let building of buildings" class="building">
+    <div class="building-title">
+      <div class="name">
+        {{ building.name }}
+      </div>
+  
+      <div class="level">
+        Nv {{ building.level }}
+      </div>
+    </div>
+  
+    <div class="upgrade"
+         (click)="upgradeBuilding(building)">
+      <span *ngFor="let cost of building.costs"
+            class="cost"
+            [class.red]="!cost.hasEnough">
+        {{ cost.resource.name }}: {{ cost.value }}
+      </span>
+    </div>
+  </div>
+</div>

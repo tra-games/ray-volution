@@ -1,0 +1,50 @@
+$padding-normal: 8px;
+$radius-normal: 6px;
+
+.clock {
+  margin-bottom: 1em;
+}
+
+.resources {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+  padding: $padding-normal;
+  background-color: burlywood;
+  border-radius: $radius-normal;
+}
+
+.buildings {
+  width: 15%;
+  margin-bottom: 1em;
+  
+  .building {
+    background-color: lightgray;
+    padding: $padding-normal;
+    border-radius: $radius-normal;
+    margin-bottom: 1em;
+
+    .building-title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5em;
+    }
+
+    .upgrade {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      background-color: lightyellow;
+      border-radius: $radius-normal;
+      padding: $padding-normal / 2;
+      color: green;
+
+      .cost {
+        &.red {
+          color: red;
+        }
+      }
+    }
+  }
+}
